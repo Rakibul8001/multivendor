@@ -108,10 +108,13 @@ Route::get('/shop/{slug}', 'HomeController@shop')->name('shop.visit');
 Route::get('/shop/{slug}/{type}', 'HomeController@filter_shop')->name('shop.visit.type');
 
 Route::get('/cart', 'CartController@index')->name('cart');
+Route::get('/cart-view', 'CartController@view')->name('cart.view');
 Route::post('/cart/nav-cart-items', 'CartController@updateNavCart')->name('cart.nav_cart');
 Route::post('/cart/show-cart-modal', 'CartController@showCartModal')->name('cart.showCartModal');
 Route::post('/cart/addtocart', 'CartController@addToCart')->name('cart.addToCart');
+Route::post('/cart/addcart/{id}', 'CartController@addCart')->name('cart.addCart');
 Route::post('/cart/removeFromCart', 'CartController@removeFromCart')->name('cart.removeFromCart');
+Route::get('/cart/removeCart/{id}', 'CartController@removeCart')->name('cart.removeCart');
 Route::post('/cart/updateQuantity', 'CartController@updateQuantity')->name('cart.updateQuantity');
 
 //Checkout Routes
@@ -168,7 +171,9 @@ Route::get('/privacypolicy', 'HomeController@privacypolicy')->name('privacypolic
 
 Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    // Route::get('/front-dashboard', 'HomeController@front_dashboard')->name('front.dashboard');
     Route::get('/profile', 'HomeController@profile')->name('profile');
+    // Route::get('/front-profile', 'HomeController@front_profile')->name('front.profile');
     Route::post('/new-user-verification', 'HomeController@new_verify')->name('user.new.verify');
     Route::post('/new-user-email', 'HomeController@update_email')->name('user.change.email');
     Route::post('/customer/update-profile', 'HomeController@customer_update_profile')->name('customer.profile.update');
@@ -179,6 +184,9 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
     Route::get('/purchase_history/destroy/{id}', 'PurchaseHistoryController@destroy')->name('purchase_history.destroy');
 
     Route::resource('wishlists', 'WishlistController');
+    Route::get('/wishlist', 'WishlistController@viewWish')->name('view-wishlist');
+    Route::get('/wishlist/{id}', 'WishlistController@wishStore')->name('add-to-wishlist');
+    Route::get('/wishlist/delete/{id}', 'WishlistController@wishDelete')->name('delete-wishlist');
     Route::post('/wishlists/remove', 'WishlistController@remove')->name('wishlists.remove');
 
     Route::get('/wallet', 'WalletController@index')->name('wallet.index');
@@ -288,6 +296,7 @@ Route::any('/iyzico/payment/callback/{payment_type}/{amount?}/{payment_method?}/
 Route::post('/get-city', 'CityController@get_city')->name('get-city');
 
 Route::resource('addresses', 'AddressController');
+Route::get('/address/{id}/edit', 'AddressController@edit_address')->name('edit.address');
 Route::post('/addresses/update/{id}', 'AddressController@update')->name('addresses.update');
 Route::get('/addresses/destroy/{id}', 'AddressController@destroy')->name('addresses.destroy');
 Route::get('/addresses/set_default/{id}', 'AddressController@set_default')->name('addresses.set_default');

@@ -36,5 +36,7 @@
     <!-- Icons -->
     <script src="https://use.fontawesome.com/521374345c.js"></script>
 
+    @stack('front-style')
+
 
 </head>

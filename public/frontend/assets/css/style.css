@@ -26012,3 +26012,34 @@ body.rtl .account-setting {
 @media (max-width: 360px) {
   .rtl .timer span .padding-l {
     padding-right: 10px; } }
+
+
+    /* Start Single product color select */
+
+ .aiz-megabox {
+      position: relative;
+      cursor: pointer;
+  }  
+  
+  .aiz-megabox input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+} 
+.aiz-megabox > input:checked ~ .aiz-megabox-elem, .aiz-megabox > input:checked ~ .aiz-megabox-elem {
+  border-color: var(--primary);
+}
+.aiz-megabox .aiz-megabox-elem {
+  border: 1px solid #e2e5ec;
+  border-radius: 0.25rem;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 0.25rem;
+}
+.h-30px, .size-30px {
+  height: 30px;
+}
+.w-30px, .size-30px {
+  width: 30px;
+}
+/* End Single product color select */

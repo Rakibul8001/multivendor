@@ -1,14 +1,15 @@
 @extends('testfrontend.layouts.master')
 @section('front-content')
-    <!-- Home slider -->
-    @include('testfrontend.partials.home-slider')
-    <!-- Home slider end -->
+<!-- Home slider -->
+@include('testfrontend.partials.home-slider')
+<!-- Home slider end -->
 
-    <!-- product flash deal section start -->
-    @php
-    $flash_deal = \App\FlashDeal::where('status', 1)->where('featured', 1)->first();
-    @endphp
-    @if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
+<!-- product flash deal section start -->
+@php
+$flash_deal = \App\FlashDeal::where('status', 1)->where('featured', 1)->first();
+@endphp
+@if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s'))
+<= $flash_deal->end_date)
     <section class="ratio_square">
         <div class="container">
             <div class="row">
@@ -22,7 +23,7 @@
                     <div class="product-5 product-m no-arrow">
                         @foreach ($flash_deal->flash_deal_products as $key => $flash_deal_product)
                         @php
-                            $product = \App\Product::find($flash_deal_product->product_id);
+                        $product = \App\Product::find($flash_deal_product->product_id);
                         @endphp
                         @if ($product != null && $product->published != 0)
                         <div class="product-box product-wrap">
@@ -40,7 +41,7 @@
 
     <!-- collection banner -->
     @php
-        $featured_categories = \App\Category::where('featured', 1)->limit(2)->get();
+    $featured_categories = \App\Category::where('featured', 1)->limit(2)->get();
     @endphp
 
     @if (count($featured_categories) > 0)
@@ -52,7 +53,7 @@
                     <a href="{{ route('products.category', $category->slug) }}">
                         <div class="collection-banner p-right text-center">
                             <div class="img-part">
-                               <img src="{{ asset($category->banner) }}" class="img-fluid blur-up lazyload bg-img"
+                                <img src="{{ asset($category->banner) }}" class="img-fluid blur-up lazyload bg-img"
                                     alt="">
                             </div>
                         </div>
@@ -81,7 +82,8 @@
             <div class="row">
                 <div class="col">
                     <div class="product-4 product-m no-arrow">
-                        @foreach (filter_products(\App\Product::where('published', 1)->where('featured', '1'))->limit(12)->get() as $key => $product)
+                        @foreach (filter_products(\App\Product::where('published', 1)->where('featured',
+                        '1'))->limit(12)->get() as $key => $product)
                         <div class="product-box">
                             @include('testfrontend.partials.productbox1',['product'=>$product])
                         </div>
@@ -96,15 +98,16 @@
     <!--Start Category wise  Products -->
 
     @foreach (\App\Category::orderBy('order_level', 'desc')->has('products')->get()->take(11) as $key => $category)
-        <div class="title1 section-t-space">
-            <h2 class="title-inner1">{{ $category->name }}</h2>
-        </div>
-        <section class="section-b-space pt-0 ratio_asos">
+    <div class="title1 section-t-space">
+        <h2 class="title-inner1">{{ $category->name }}</h2>
+    </div>
+    <section class="section-b-space pt-0 ratio_asos">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="product-4 product-m no-arrow">
-                        @foreach (filter_products(\App\Product::where('published', 1)->where('featured', '1'))->where('category_id',$category->id)->limit(12)->get() as $key => $product)
+                        @foreach (filter_products(\App\Product::where('published', 1)->where('featured',
+                        '1'))->where('category_id',$category->id)->limit(12)->get() as $key => $product)
                         <div class="product-box">
                             @include('testfrontend.partials.productbox1',['product'=>$product])
                         </div>
@@ -115,13 +118,13 @@
         </div>
     </section>
     @endforeach
-   <!--Start Category wise  Products -->
+    <!--Start Category wise  Products -->
 
 
     <!-- Parallax banner -->
     <section class="p-0">
         <div class="full-banner parallax text-center p-left">
-           <img src="{{asset('frontend/assets/images/parallax/1.jpg')}}" alt="" class="bg-img blur-up lazyload">
+            <img src="{{asset('frontend/assets/images/parallax/1.jpg')}}" alt="" class="bg-img blur-up lazyload">
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -150,14 +153,15 @@
                     <div class="theme-tab">
                         <ul class="tabs tab-title">
                             <li class="current"><a href="tab-4">Best Selling</a></li>
-                            <li class="" ><a href="tab-5">Women Clothing & Fashion</a></li>
+                            <li class=""><a href="tab-5">Women Clothing & Fashion</a></li>
                             <li class=""><a href="tab-6">Men Clothing & Fashion</a></li>
                         </ul>
                         <div class="tab-content-cls">
                             <div id="tab-4" class="tab-content active default">
                                 <div class="no-slider row">
                                     @if (get_setting('best_selling') == 1)
-                                    @foreach (filter_products(\App\Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->limit(12)->get() as $key => $product)
+                                    @foreach (filter_products(\App\Product::where('published',
+                                    1)->orderBy('num_of_sale', 'desc'))->limit(12)->get() as $key => $product)
                                     <div class="product-box">
                                         @include('testfrontend.partials.productbox1',['product'=>$product])
                                     </div>
@@ -169,7 +173,8 @@
 
                             <div id="tab-5" class="tab-content">
                                 <div class="no-slider row">
-                                    @foreach (filter_products(\App\Product::where('published', 1)->where('category_id', 4))->limit(12)->get() as $key => $product)
+                                    @foreach (filter_products(\App\Product::where('published', 1)->where('category_id',
+                                    4))->limit(12)->get() as $key => $product)
                                     <div class="product-box">
                                         @include('testfrontend.partials.productbox1',['product'=>$product])
                                     </div>
@@ -179,12 +184,13 @@
                             <div id="tab-6" class="tab-content">
                                 <div class="no-slider row">
 
-                                    @foreach (filter_products(\App\Product::where('published', 1)->where('category_id', 3))->limit(12)->get() as $key => $product)
+                                    @foreach (filter_products(\App\Product::where('published', 1)->where('category_id',
+                                    3))->limit(12)->get() as $key => $product)
                                     <div class="product-box">
                                         @include('testfrontend.partials.productbox1',['product'=>$product])
                                     </div>
                                     @endforeach
-                          
+
                                 </div>
                             </div>
                         </div>
@@ -294,12 +300,12 @@
                 <div class="col-md-12">
                     <div class="slide-3 no-arrow slick-default-margin">
                         @foreach ($blogs as $blog)
-            
+
                         <div class="col-md-12">
                             <a href="{{ route('details.blogs',$blog->slug ) }}">
                                 <div class="classic-effect">
                                     <div>
-                                       <img src="{{ asset($blog->banner) }}" class="img-fluid blur-up lazyload bg-img"
+                                        <img src="{{ asset($blog->banner) }}" class="img-fluid blur-up lazyload bg-img"
                                             alt="{{ asset($blog->title) }}">
                                     </div>
                                     <span></span>
@@ -311,7 +317,7 @@
                                     <p>{{ $blog->title }}</p>
                                 </a>
                                 <hr class="style1">
-                                
+
                             </div>
                         </div>
                         @endforeach
@@ -323,30 +329,31 @@
     <!-- blog section end -->
 
     @php
-        $num_todays_deal = count(filter_products(\App\Product::where('published', 1)->where('todays_deal', 1 ))->get());
+    $num_todays_deal = count(filter_products(\App\Product::where('published', 1)->where('todays_deal', 1 ))->get());
     @endphp
     <!-- instagram section -->
     @if ($num_todays_deal > 0)
-    
+
     <section class="instagram ratio_square">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 p-0">
                     <h2 class="title-borderless">Todays Deal</h2>
                     <div class="slide-7 no-arrow slick-instagram">
-                        @foreach (filter_products(\App\Product::where('published', 1)->where('todays_deal', '1'))->get() as $key => $product)
+                        @foreach (filter_products(\App\Product::where('published', 1)->where('todays_deal', '1'))->get()
+                        as $key => $product)
                         @if ($product != null)
                         <div>
                             <a href="{{ route('product.details', $product->slug) }}">
-                                <div class="instagram-box"><img src="{{ asset($product->thumbnail_img) }}" class="bg-img"
-                                        alt="{{ $product->getTranslation('name') }}">
-                                    
+                                <div class="instagram-box"><img src="{{ asset($product->thumbnail_img) }}"
+                                        class="bg-img" alt="{{ $product->getTranslation('name') }}">
+
                                 </div>
                             </a>
                         </div>
                         @endif
                         @endforeach
-           
+
                     </div>
                 </div>
             </div>
@@ -357,7 +364,7 @@
 
 
     <!--  logo section -->
- 
+
     <section class="section-b-space">
         <div class="container">
             <div class="row">
@@ -366,7 +373,8 @@
                         @foreach ($top_brands as $key => $brand)
                         <div>
                             <div class="logo-block">
-                                <a href="{{ route('products.brand', $brand->slug) }}"><img src="{{asset($brand->logo)}}" alt=""></a>
+                                <a href="{{ route('allproducts.brand', $brand->slug) }}"><img
+                                        src="{{asset($brand->logo)}}" alt=""></a>
                             </div>
                         </div>
                         @endforeach
@@ -376,5 +384,5 @@
             </div>
         </div>
     </section>
-  
-@endsection
+
+    @endsection

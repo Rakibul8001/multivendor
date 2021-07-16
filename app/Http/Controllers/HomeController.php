@@ -116,7 +116,7 @@ class HomeController extends Controller
         if (Auth::user()->user_type == 'seller') {
             return view('frontend.user.seller.dashboard');
         } elseif (Auth::user()->user_type == 'customer') {
-            return view('frontend.user.customer.dashboard');
+            return view('testfrontend.user.customer.dashboard');
         } elseif (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.frontend.dashboard');
         } else {
@@ -124,10 +124,22 @@ class HomeController extends Controller
         }
     }
 
+    //Custom Dashboard for testfrontend
+    // public function front_dashboard()
+    // {
+    //     if (Auth::user()->user_type == 'seller') {
+    //         return view('testfrontend.user.seller.dashboard');
+    //     } elseif (Auth::user()->user_type == 'customer') {
+    //         return view('testfrontend.user.customer.dashboard');
+    //     } else {
+    //         abort(404);
+    //     }
+    // }
+
     public function profile(Request $request)
     {
         if (Auth::user()->user_type == 'customer') {
-            return view('frontend.user.customer.profile');
+            return view('testfrontend.user.customer.profile');
         } elseif (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.frontend.profile');
         } elseif (Auth::user()->user_type == 'seller') {

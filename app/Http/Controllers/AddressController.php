@@ -37,10 +37,9 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $address = new Address;
-        if($request->has('customer_id')){
+        if ($request->has('customer_id')) {
             $address->user_id = $request->customer_id;
-        }
-        else{
+        } else {
             $address->user_id = Auth::user()->id;
         }
         $address->address = $request->address;
@@ -76,6 +75,12 @@ class AddressController extends Controller
         return view('frontend.user.address.edit_address_modal', $data);
     }
 
+    public function edit_address($id)
+    {
+        $data['address_data'] = Address::findOrFail($id);
+        return view('testfrontend.user.address.edit_address', $data);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -86,7 +91,7 @@ class AddressController extends Controller
     public function update(Request $request, $id)
     {
         $address = Address::findOrFail($id);
-        
+
         $address->address = $request->address;
         $address->country = $request->country;
         $address->city = $request->city;
@@ -107,7 +112,7 @@ class AddressController extends Controller
     public function destroy($id)
     {
         $address = Address::findOrFail($id);
-        if(!$address->set_default){
+        if (!$address->set_default) {
             $address->delete();
             return back();
         }
@@ -115,7 +120,8 @@ class AddressController extends Controller
         return back();
     }
 
-    public function set_default($id){
+    public function set_default($id)
+    {
         foreach (Auth::user()->addresses as $key => $address) {
             $address->set_default = 0;
             $address->save();

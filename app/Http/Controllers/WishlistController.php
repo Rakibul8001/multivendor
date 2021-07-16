@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
+use App\Models\Product;
 use App\Wishlist;
-use App\Category;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -18,6 +19,12 @@ class WishlistController extends Controller
     {
         $wishlists = Wishlist::where('user_id', Auth::user()->id)->paginate(9);
         return view('frontend.user.view_wishlist', compact('wishlists'));
+    }
+
+    public function viewWish()
+    {
+        $wishlists = Wishlist::where('user_id', Auth::user()->id)->paginate(9);
+        return view('testfrontend.user.view_wishlist', compact('wishlists'));
     }
 
     /**
@@ -51,12 +58,37 @@ class WishlistController extends Controller
         return 0;
     }
 
+    //for test frontend wishstore
+    public function wishStore(Request $request)
+    {
+        if(Auth::check()){
+            $wishlist = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->id)->first();
+            if($wishlist == null){
+                $wishlist = new Wishlist;
+                $wishlist->user_id = Auth::user()->id;
+                $wishlist->product_id = $request->id;
+                $wishlist->save();
+            }
+            return back();
+        }
+        return 0;
+    }
+
     public function remove(Request $request)
     {
         $wishlist = Wishlist::findOrFail($request->id);
         if($wishlist!=null){
             if(Wishlist::destroy($request->id)){
                 return view('frontend.partials.wishlist');
+            }
+        }
+    }
+    public function wishDelete(Request $request)
+    {
+        $wishlist = Wishlist::findOrFail($request->id);
+        if($wishlist!=null){
+            if(Wishlist::destroy($request->id)){
+                return back();
             }
         }
     }
